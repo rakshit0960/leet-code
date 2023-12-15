@@ -1,20 +1,16 @@
 class Solution {
 public:
     string destCity(vector<vector<string>>& paths) {
-        bool has_outgoing = true;
-        string city = paths[0][0];
+        unordered_set<string> src;
 
-        while (has_outgoing) {
-            has_outgoing = false;
-
-            for (auto& path : paths) {
-                if (path[0] == city) {
-                    city = path[1];
-                    has_outgoing =true;
-                }
-            }
+        for (auto& path : paths) {
+            src.insert(path[0]);    
         }
 
-        return city;
+        for (auto& path : paths) {
+            if (!src.count(path[1])) return path[1];  
+        }
+
+        return "cycle";
     }
 };
