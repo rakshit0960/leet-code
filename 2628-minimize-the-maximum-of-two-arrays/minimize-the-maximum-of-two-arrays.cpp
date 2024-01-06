@@ -1,16 +1,16 @@
 class Solution {
 public:
-    int gdc(int a, int b) {
+    long gdc(int a, int b) {
         if (a % b == 0) return b;
         return gdc(b, a % b);
     }
 
-    int lcm(int a, int b) {
-        return min(long(INT_MAX), long(a) * b / gdc(a, b)); 
+    long lcm(int a, int b) {
+        return a / gdc(a, b) * b;
     }
 
     int minimizeSet(int divisor1, int divisor2, int uniqueCnt1, int uniqueCnt2) {
-        int lcmResult = lcm(divisor1, divisor2);
+        long lcmResult = lcm(divisor1, divisor2);
         int start = 1, end = INT_MAX, res = -1;
 
         auto check_valid = [&] (int ans) -> bool {
