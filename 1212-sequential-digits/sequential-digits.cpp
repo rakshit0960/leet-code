@@ -5,11 +5,10 @@ public:
         for (int i = 0; i < 9; i++) nums[i] = i + 1;
 
         vector<int> res;
-        while (!nums.empty()) {
-            for (int i = 0; i < nums.size(); i++) {
+        for (int j = 9; j > 0; j--) {
+            for (int i = 0; i < j; i++) {
                 if (nums[i] > high) return res;
                 if (nums[i] >= low) res.push_back(nums[i]);
-                if (nums[i] % 10 == 9) nums.pop_back();
                 nums[i] = nums[i] * 10 + (nums[i] % 10) + 1;
             }
         }
