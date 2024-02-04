@@ -1,13 +1,12 @@
 class Solution:
-    def maxSumAfterPartitioning(self, arr: List[int], k: int, i: int = 0) -> int:
-
-        @lru_cache(maxsize=None)
-        def func(i: int) -> int:
-            if i == len(arr): return 0
-            curr, res = 0, 0
-            for j in range(i, i + min(k, len(arr) - i)):
-                curr = max(curr, arr[j])
-                res = max(res, curr * (j - i + 1) + func(j + 1))    
-            return res
+    def maxSumAfterPartitioning(self, arr: List[int], k: int) -> int:
+        dp = [0] * (len(arr) + 1)
         
-        return func(0)
+        for i in range(len(arr) - 1, -1, -1):
+            curr = 0
+            for j in range(i, min(i + k, len(arr))):
+                curr = max(curr, arr[j])
+                dp[i] = max(dp[i], curr * (j - i + 1) + dp[j + 1])
+        
+        return dp[0]
+                
