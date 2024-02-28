@@ -13,7 +13,6 @@ class Solution {
 public:
     int findBottomLeftValue(TreeNode* root) {
         maxDepth = -1; 
-        res = 124125135;
         dfs(root, 0);
         return res;
     }
