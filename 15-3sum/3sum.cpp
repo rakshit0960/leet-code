@@ -16,7 +16,7 @@ public:
                 else {
                     res.push_back({nums[i], nums[l], nums[r]});
                     r--;
-                    while (nums[r] == nums[r + 1] && r > l) r--;
+                    while (nums[r] == nums[r + 1] && r > 0) r--;
                 }
             }
         }
