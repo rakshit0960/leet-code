@@ -11,19 +11,27 @@
  */
 class Solution {
 public:
-    pair<int, int> dfs(TreeNode* root, int depth) {
-        if (!root) return {0, -1};
-        pair<int, int> res = {root->val, depth};
-
-        auto lres = dfs(root->left, depth + 1);
-        if (lres.second > res.second) res = lres;
-
-        lres = dfs(root->right, depth + 1);
-        if (lres.second > res.second) res = lres;
+    int findBottomLeftValue(TreeNode* root) {
+        maxDepth = -1; 
+        res = 124125135;
+        dfs(root, 0);
         return res;
     }
 
-    int findBottomLeftValue(TreeNode* root) {   
-        return dfs(root, 1).first;
+private:
+    int maxDepth;
+    int res;
+
+    void dfs(TreeNode* root, int depth) {
+        if (!root) return;
+
+        if (depth > maxDepth) {
+            res = root->val;
+            maxDepth = depth;
+        }
+
+        dfs(root->left, depth + 1);
+        dfs(root->right, depth + 1);
     }
+
 };
