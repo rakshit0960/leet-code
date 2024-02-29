@@ -30,7 +30,6 @@ public:
                 continue;
             } 
 
-            // check if no fault
             if (level % 2 == 0) {
                 if (node->val % 2 == 0 || node->val <= prev_val) return false;
                 prev_val = node->val;
