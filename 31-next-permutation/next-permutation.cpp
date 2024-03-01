@@ -13,13 +13,9 @@ public:
 
 
         int swp = pivot + 1;
-
         while (swp < nums.size() && nums[swp] > nums[pivot]) swp++;
 
         swap(nums[pivot], nums[swp - 1]);
-
         reverse(nums.begin() + pivot + 1, nums.end());
-        
-
     }
 };
