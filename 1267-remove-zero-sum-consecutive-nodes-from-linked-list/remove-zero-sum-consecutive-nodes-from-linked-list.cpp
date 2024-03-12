@@ -13,17 +13,19 @@ public:
     ListNode* removeZeroSumSublists(ListNode* head) {
         ListNode dummy(0, head);
         ListNode* curr = &dummy;
+        unordered_map<int, ListNode*> prefixSumNodes;
+        int sum = 0;
         while (curr) {
-            ListNode* temp = curr->next;
-            ListNode* deleteNode = curr;
-            int sum = 0;
-            while (temp) {
-                sum += temp->val;
-                if (sum == 0) deleteNode = temp;
-                temp = temp->next;
-            }
+            sum += curr->val;
+            prefixSumNodes[sum] = curr;
+            curr = curr->next;
+        }
 
-            curr->next = deleteNode->next;
+        sum = 0;
+        curr = &dummy;
+        while (curr) {
+            sum += curr->val;
+            curr->next = prefixSumNodes[sum]->next;
             curr = curr->next;
         }
 
