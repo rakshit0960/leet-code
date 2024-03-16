@@ -2,21 +2,19 @@ class Solution {
 public:
     int change(int amount, vector<int>& coins) {
         int n = coins.size();
-        function<int(int, int)> dfs;
+        vector<int> dp(amount + 1, -1);
 
-        vector<vector<int>> dp(n, vector<int>(amount + 1, -1));
-        
-        dfs = [&] (int i, int amt) {
-            if (i == 0) return int(!bool((amt % coins[i])));
-            if (dp[i][amt] != -1) return dp[i][amt];
+        for (int amt = 0; amt <= amount; amt++) {
+            dp[amt] = !(amt % coins[0]);
+        }
 
-            int res = dfs(i - 1, amt);
-            if (amt >= coins[i]) 
-                res += dfs(i, amt - coins[i]);
+        for (int i = 1; i < n; i++) {
+            for (int amt = 0; amt <= amount; amt++) {
+                if (amt >= coins[i]) 
+                    dp[amt] += dp[amt - coins[i]];
+            }
+        }
 
-            return dp[i][amt] = res;
-        };
-
-        return dfs(n - 1, amount);
+        return dp[amount];
     }
 };
