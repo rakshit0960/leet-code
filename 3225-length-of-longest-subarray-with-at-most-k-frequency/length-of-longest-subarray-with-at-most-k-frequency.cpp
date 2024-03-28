@@ -2,18 +2,15 @@ class Solution {
 public:
     int maxSubarrayLength(vector<int>& nums, int k) {
         unordered_map<int, int> freq_map;
-        deque<int> dq;
         int res = 0;
-
-        for (int num : nums) {
-            freq_map[num]++;
-            dq.push_back(num);
-            while (freq_map[num] > k) {
-                int front = dq.front();
-                dq.pop_front();
-                freq_map[front]--;
+        int s = 0;
+        for (int e = 0; e < nums.size(); e++) {
+            freq_map[nums[e]]++;
+            while (freq_map[nums[e]] > k && s <= e) {
+                freq_map[nums[s]]--;
+                s++;
             }
-            res = max(res, (int)dq.size());
+            res = max(res, e - s + 1);
         }
 
         return res;
