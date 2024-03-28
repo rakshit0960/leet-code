@@ -6,7 +6,7 @@ public:
         int s = 0;
         for (int e = 0; e < nums.size(); e++) {
             freq_map[nums[e]]++;
-            while (freq_map[nums[e]] > k && s <= e) {
+            while (freq_map[nums[e]] > k) {
                 freq_map[nums[s]]--;
                 s++;
             }
