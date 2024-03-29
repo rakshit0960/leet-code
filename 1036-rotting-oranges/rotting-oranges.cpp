@@ -8,11 +8,14 @@ public:
 
         queue<pair<int, int>> que;
 
+        int freshCount = 0;
+
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-                if (grid[i][j] == 2) {
+                if (grid[i][j] == 2) 
                     que.push({i, j});
-                }
+                else if (grid[i][j] == 1)
+                    freshCount += 1;
             }
         }
         que.push({-1, -1});
@@ -39,16 +42,11 @@ public:
                 if (grid[x][y] != 1) continue;
 
                 grid[x][y] = 2;
+                freshCount--;
                 que.push({x, y});
             }
         }
 
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                if (grid[i][j] == 1) return -1;
-            }
-        }
-
-        return count;
+        return (freshCount) ? -1 : count;
     }
 };
