@@ -7,42 +7,37 @@ public:
         if (n == 1) return { 0 };
 
         for (auto& edge : edges) {
-            int node = edge[0];
-            int adjNode = edge[1];
+            int node = edge[0], adjNode = edge[1];
             inOrder[node]++;
             inOrder[adjNode]++;
-
             adj[node].push_back(adjNode);
             adj[adjNode].push_back(node);
         }
 
-        queue<int> que;
+        queue<int> leaves;
         for (int i = 0; i < n; i++) {
-            cout << inOrder[i] << " ";
             if (inOrder[i] == 1) {
-                que.push(i);
+                leaves.push(i);
             }    
         }
-        que.push(-1);
-
-        vector<int> res = {}; 
-        while (!que.empty()){
-            int node = que.front();
-            que.pop();
-            
-            if (node == -1) {
-                if (que.empty()) return res;
-                res = {};
-                que.push(-1);
-                continue;
+        
+        while (n > 2){
+            int size = leaves.size();
+            for (int i = 0; i < size; i++) {
+                int node = leaves.front();
+                leaves.pop();
+                n--;
+                for (int adjNode : adj[node]) {
+                    inOrder[adjNode]--;
+                    if (inOrder[adjNode] == 1) leaves.push(adjNode);
+                }
             }
+        }
 
-            res.push_back(node);
-            
-            for (int adjNode : adj[node]) {
-                inOrder[adjNode]--;
-                if (inOrder[adjNode] == 1) que.push(adjNode);
-            }
+        vector<int> res; 
+        while (!leaves.empty()) {
+            res.push_back(leaves.front());
+            leaves.pop();
         }
 
         return res;
