@@ -13,9 +13,6 @@ public:
             }
         }
 
-        for (int i = 0; i < 26; i++) {
-            cout << dp[i + 'a'] << " ";
-        }
         return *max_element(dp.begin(), dp.end());
     }
 };
