@@ -4,6 +4,7 @@ public:
         int n = s.size();
         vector<int> dp(256);
         
+        int res = 0;
         for (int i = 0; i < n; i++) {
             char ch = s[i];
             dp[ch] = max(1, dp[ch] + 1);
@@ -11,8 +12,9 @@ public:
                 dp[ch] = max(dp[ch], dp[ch + j] + 1);
                 dp[ch] = max(dp[ch], dp[ch - j] + 1);
             }
+            res = max(res, dp[ch]);
         }
 
-        return *max_element(dp.begin(), dp.end());
+        return res;
     }
 };
