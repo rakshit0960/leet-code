@@ -12,9 +12,9 @@ public:
             int count = 0, curr = num; 
             while (numsSet.count(curr)) {
                 count++;
-                res = max(res, count);
                 curr = curr + 1;
             }
+            res = max(res, count);
         } 
 
         return res;
