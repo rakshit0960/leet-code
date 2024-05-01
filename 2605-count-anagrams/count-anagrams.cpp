@@ -4,7 +4,6 @@ private:
     static const int N = 1e5 + 1;
     
     long long fact[N];
-    long long inv_fact[N];
 
     long long pow(long long b, long long p) {
         long long res = 1;
@@ -24,14 +23,18 @@ private:
         fact[0] = 1;
         for (int i = 1; i < N; i++) {
             fact[i] = (fact[i - 1] * i) % m;
-            inv_fact[i] = pow(fact[i], m - 2);
+            // inv_fact[i] = pow(fact[i], m - 2);
         }
+    }
+
+    long long inv_fact(int a) {
+        return pow(fact[a], m - 2);
     }
 
     long long arrangements (int n, const unordered_map<char, int>& freq) {
         long long res = fact[n];
         for (auto it : freq) 
-            res = (res * inv_fact[it.second]) % m;
+            res = (res * inv_fact(it.second)) % m;
         return res;
     }
 public:
