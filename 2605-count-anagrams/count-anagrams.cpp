@@ -6,13 +6,17 @@ private:
     long long fact[N];
     long long inv_fact[N];
 
-    long long pow(int b, int p) {
-        if (p == 0) return 1;
-        if (p == 1) return b % m;
-
-        long long res = pow(b, p / 2);
-        res = (res * res) % m;
-        if (p % 2 == 1) res = (res * (b % m)) % m;
+    long long pow(long long b, long long p) {
+        long long res = 1;
+        while (p > 0) {
+            if (p % 2 == 1) {
+                res =  ((res % m) *  (b % m)) % m ;
+                p--;
+            } else {
+                b = (b % m * b % m) % m;
+                p /= 2;
+            }
+        }
         return res;
     }
 
