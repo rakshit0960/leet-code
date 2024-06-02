@@ -18,7 +18,7 @@ public:
                     dp[i] = min(dp[i], 1 + dp[j + 1]);
             }
         }
-        for (int i : dp) cout << i << " ";
+        
         return dp[0];
     }
 };
