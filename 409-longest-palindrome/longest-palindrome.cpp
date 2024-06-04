@@ -1,8 +1,7 @@
 class Solution {
 public:
     int longestPalindrome(string s) {
-        bool charSet[256];
-        fill(charSet, charSet + 256, false);
+        bool charSet[256] = { 0 };
         
         int res = 0, oddCount = 0;
         for (char ch : s) {
