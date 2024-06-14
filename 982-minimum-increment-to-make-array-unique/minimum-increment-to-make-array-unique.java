@@ -1,0 +1,29 @@
+import java.util.*;
+
+class Solution {
+    public int minIncrementForUnique(int[] nums) {
+        Map<Integer, Integer> map = new HashMap<>();
+
+        for (int num : nums) {
+            map.putIfAbsent(num, 0);
+            map.put(num, map.get(num) + 1);
+        }
+        
+        int res = 0;
+        Stack<Integer> stack = new Stack<>();
+        for (int i = 0; i <= 2 * (int)10e5 ; i++) {
+            if (!map.containsKey(i)) {
+                if (stack.isEmpty()) continue;
+                int top = stack.peek();
+                res += i - top;
+                map.put(top, map.get(top) - 1);
+                if (map.get(top) <= 1) stack.pop();
+            }        
+            else if (map.get(i) > 1) {
+                stack.push(i);
+            }
+        }
+
+        return res;
+    }
+}
