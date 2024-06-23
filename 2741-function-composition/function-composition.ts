@@ -2,12 +2,9 @@ type F = (x: number) => number;
 
 function compose(functions: F[]): F {
     
-    return function(x) {
-        for (let fn of functions.reverse()) {
-            x = fn(x);
-        }    
-        return x;
-    }
+    return (x) => functions.reverse().reduce((acc: number, curr: F) => {
+        return curr(acc)
+    }, x)
 };
 
 /**
