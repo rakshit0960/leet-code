@@ -1,22 +1,20 @@
 class Solution {
     typedef long long ll;
-    ll sum(vector<int>& arr, int s, int e) {
-        ll sum = 0;
-        for (int i = s; i <= e; i++) 
-            sum += arr[i];
-        
-        return sum;
-    }
-
 public:
     int splitArray(vector<int>& nums, int k) {
         const int n = nums.size();
         function<ll(int, int)> f;
         vector<vector<ll>> dp(n, vector<ll>(k + 1, -1));
+        vector<ll> prefix_sum(n);
+
+        prefix_sum[0] = nums[0];
+        for (int i = 1; i < n; i++) {
+            prefix_sum[i] = prefix_sum[i - 1] + nums[i];
+        }
 
         f = [&] (int i, int m) {
             if (m == 1)
-                return sum(nums, i, n - 1);
+                return prefix_sum[n - 1] - prefix_sum[i] + nums[i];
             if (dp[i][m] != -1)
                 return dp[i][m];
 
