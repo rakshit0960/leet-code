@@ -12,25 +12,6 @@ public:
             prefix_sum[i] = prefix_sum[i - 1] + nums[i];
         }
 
-        // f = [&] (int i, int m) {
-        //     if (m == 1)
-        //         return prefix_sum[n - 1] - prefix_sum[i] + nums[i];
-
-        //     if (dp[i][m] != -1)
-        //         return dp[i][m];
-
-        //     ll res = INT_MAX, curr_sum = 0;
-        //     for (int j = i; j <= n - m; j++) {
-        //         curr_sum += nums[j];
-        //         ll max_sum = max(curr_sum, f(j + 1, m - 1));
-        //         res = min(res, max_sum);
-        //         if (curr_sum > res) break;
-        //     }
-
-        //     return dp[i][m] = res;
-        // };
-
-
         // base Case 
         //     if (m == 1)
         //         return prefix_sum[n - 1] - prefix_sum[i] + nums[i];
@@ -38,8 +19,7 @@ public:
             dp[i][1] = prefix_sum[n - 1] - prefix_sum[i] + nums[i];
         }
 
-
-        // reoccourance (i, m)
+        // filling dp table (i, m)
         //     ll res = INT_MAX, curr_sum = 0;
         //     for (int j = i; j <= n - m; j++) {
         //         curr_sum += nums[j];
@@ -47,8 +27,6 @@ public:
         //         res = min(res, max_sum);
         //         if (curr_sum > res) break;
         //     }
-
-
         for (int m = 2; m <= k; m++) {
             for (int i = n - 1; i >= 0; i--) {
                 ll res = INT_MAX, curr_sum = 0;
