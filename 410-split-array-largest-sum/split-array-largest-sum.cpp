@@ -25,6 +25,7 @@ public:
                 curr_sum += nums[j];
                 ll max_sum = max(curr_sum, f(j + 1, m - 1));
                 res = min(res, max_sum);
+                if (curr_sum > res) break;
             }
 
             return dp[i][m] = res;
