@@ -1,44 +1,38 @@
 class Solution {
     typedef long long ll;
-public:
-    int splitArray(vector<int>& nums, int k) {
-        const int n = nums.size();
-        function<ll(int, int)> f;
-        vector<vector<ll>> dp(n, vector<ll>(k + 1));
-        vector<ll> prefix_sum(n);
+    bool check(vector<int>& nums, int k, int mid) {
+        ll subarrayCount = 1;
+        ll currSum = 0;
 
-        prefix_sum[0] = nums[0];
-        for (int i = 1; i < n; i++) {
-            prefix_sum[i] = prefix_sum[i - 1] + nums[i];
-        }
-
-        // base Case 
-        //     if (m == 1)
-        //         return prefix_sum[n - 1] - prefix_sum[i] + nums[i];
-        for (int i = 0; i < n; i++) {
-            dp[i][1] = prefix_sum[n - 1] - prefix_sum[i] + nums[i];
-        }
-
-        // filling dp table (i, m)
-        //     ll res = INT_MAX, curr_sum = 0;
-        //     for (int j = i; j <= n - m; j++) {
-        //         curr_sum += nums[j];
-        //         ll max_sum = max(curr_sum, f(j + 1, m - 1));
-        //         res = min(res, max_sum);
-        //         if (curr_sum > res) break;
-        //     }
-        for (int m = 2; m <= k; m++) {
-            for (int i = n - 1; i >= 0; i--) {
-                ll res = INT_MAX, curr_sum = 0;
-                for (int j = i; j <= n - m; j++) {
-                    curr_sum += nums[j];
-                    ll max_sum = max(curr_sum, dp[j + 1][m - 1]);
-                    res = min(res, max_sum);
-                }
-                dp[i][m] = res;
+        for (int num : nums) {
+            currSum += num;
+            if (currSum > mid) {
+                currSum = num;
+                subarrayCount++;
             }
         }
 
-        return dp[0][k];
+        return subarrayCount <= k;
+    }
+public:
+    int splitArray(vector<int>& nums, int k) {
+        ll low = *max_element(nums.begin(), nums.end());
+        ll high = accumulate(nums.begin(), nums.end(), 0ll);
+        ll res = high;
+
+
+        while (low <= high) {
+        cout << low << " " << high << endl;
+            ll mid = low + (high - low) / 2;
+            if (check(nums, k, mid)) {
+                res = mid;
+                high = mid - 1;
+            }
+            else {
+                low = mid + 1;
+            }
+        }
+
+        return res;
     }
 };
