@@ -13,7 +13,6 @@ public:
 
         dp[0] = 0;
         dp[1] = arr[0] * freq[arr[0]];
-        cout << dp[0] << " " << dp[1]  << " ";
         for (int i = 2; i <= n; i++) {
             int currNum = arr[i - 1];
             int currEarn = freq[currNum] * currNum;
@@ -23,7 +22,6 @@ public:
             } else {
                 dp[i] = currEarn + dp[i - 1];
             }
-            cout << dp[i] << " ";
         }
 
         return dp[n];
