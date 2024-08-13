@@ -9,7 +9,7 @@ public:
         int left = 0;
 
         vector<int> res;
-        while (right >= left && up <= down) {
+        while (true) {
             // right
             for (int i = left; i <= right; i++) {
                 res.push_back(matrix[up][i]);
