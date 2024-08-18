@@ -1,19 +1,17 @@
 class Solution {
 public:
     int nthUglyNumber(int n) {
-        set<long long> pq;
-
-
-        pq.insert(1);
+        vector<int> dp(n, 1);
+        int i2 = 0, i3 = 0, i5 = 0;
+        
         for (int i = 1; i < n; i++) {
-            int top = *pq.begin();
-            pq.erase(top);
+            dp[i] = min({ dp[i2] * 2, dp[i3] * 3, dp[i5] * 5 });
 
-            pq.insert(top * 2ll);
-            pq.insert(top * 3ll);
-            pq.insert(top * 5ll);
+            if (dp[i] == dp[i2] * 2) i2++;
+            if (dp[i] == dp[i3] * 3) i3++;
+            if (dp[i] == dp[i5] * 5) i5++;
         }
 
-        return *pq.begin();
+        return dp[n - 1];
     }
 };
