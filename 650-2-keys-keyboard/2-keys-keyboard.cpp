@@ -1,21 +1,19 @@
 class Solution {
 public:
     int minSteps(int n) {
-        function<int(int, int)> dfs;
-        if (n == 1) return 0;
+        vector<int> dp(n + 1, 1000);
 
-        vector<vector<int>> dp(n + 1, vector<int>(n + 1, - 1));
+        dp[1] = 0;
+        
+        for (int i = 2; i <= n; i++) {
+            for (int j = 1; j <= i / 2; j++) {
+                if (i % j == 0) {
+                    dp[i] = min(dp[i], dp[j] + i / j);
+                }
+            }
+            cout << dp[i] << " ";
+        }
 
-        dfs = [&] (int count, int paste) {
-            if (count == n) return 1;
-            if (count > n) return int(1e9);
-            if (dp[count][paste] != -1) return dp[count][paste];
-            int doPaste = 1ll + dfs(count + paste, paste);
-            int doCopyPaste = 2ll + dfs(count + count, count);
-
-            return dp[count][paste] = min(doPaste, doCopyPaste);
-        };
-
-        return dfs(1, 1);
+        return dp[n];
     }
 };
