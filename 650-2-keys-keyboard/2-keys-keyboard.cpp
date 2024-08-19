@@ -1,19 +1,16 @@
 class Solution {
 public:
     int minSteps(int n) {
-        vector<int> dp(n + 1, 1000);
+        int count = 0, factor = 2;
 
-        dp[1] = 0;
-        
-        for (int i = 2; i <= n; i++) {
-            for (int j = 1; j <= i / 2; j++) {
-                if (i % j == 0) {
-                    dp[i] = min(dp[i], dp[j] + i / j);
-                }
+        while (n > 1) {
+            if (n % factor == 0) {
+                count += factor;
+                n = n / factor;
             }
-            cout << dp[i] << " ";
+            else factor++;
         }
 
-        return dp[n];
+        return count;
     }
 };
