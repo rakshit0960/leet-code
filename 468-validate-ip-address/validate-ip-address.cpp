@@ -1,24 +1,49 @@
 class Solution {
+    bool checkIsValidIpv4_character(char ch) {
+        // not a number 
+        if (ch < '0' || ch > '9') return false;
+        return true;
+    }
+
+    bool checkIsValidIpv6_character(char ch) {
+        // if not a number
+        if (ch < '0' || ch > '9') {
+            // if not a small case letter a to f
+            if (ch < 'a' || ch > 'f') {
+                // if not a uppercase letter A to F
+                if (ch < 'A' || ch > 'F') {
+                    // not a number for a valid character
+                    return false;
+                }   
+            }
+        }
+
+        return true;
+    }
 
     bool checkIsValidIpv4(string queryIP) {
         const int n = queryIP.size();
         int sectionCount = 0;
         int s = 0;
         for (int e = 0; e <= n; e++) {
+            // keep continueing until reached the end of a period
             if (e != n) {
                 if (queryIP[e] != '.') continue;
             }
-            // either e == n || e != n And q[e] == '.'
+            
+            // if size of section is zero or 
+            // size of section if greater than 3
             if (e == s || e - s > 3) return false;
 
             string curr = "";
             for (int i = s; i < e; i++) {
-                // symbols
-                if (queryIP[i] < '0' || queryIP[i] > '9') return false;
+                if (!checkIsValidIpv4_character(queryIP[i])) return false;
                 curr += queryIP[i];
             }
+            
             // leading zeros
             if (curr.size() > 1 && curr[0] == '0') return false;
+
             int num = stoi(curr);
 
             // num out of range
@@ -35,28 +60,23 @@ class Solution {
         int sectionCount = 0;
         int s = 0;
         for (int e = 0; e <= n; e++) {
+            // keep continueing until reached the end of a period
             if (e != n) {
                 if (queryIP[e] != ':') continue;
             }
-            // either e == n || e != n And q[e] == ':'
 
+            // if size of section is zero or 
+            // size of section if greater than 4
             if (e == s || e - s > 4) return false;
 
             for (int i = s; i < e; i++) {
-                // if not a number
-                if (queryIP[i] < '0' || queryIP[i] > '9') {
-                    // if not a small case letter a to f
-                    if (queryIP[i] < 'a' || queryIP[i] > 'f') {
-                        // if not a uppercase letter A to F
-                        if (queryIP[i] < 'A' || queryIP[i] > 'F') {
-                            return false;
-                        }   
-                    }
-                }
+                if (!checkIsValidIpv6_character(queryIP[i])) return false;
             }
+
             sectionCount++;
             s = e + 1;
         }
+
         if (sectionCount == 8) return true;
         return false;
     }
