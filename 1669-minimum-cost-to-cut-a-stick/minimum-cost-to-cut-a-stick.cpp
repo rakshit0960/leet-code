@@ -10,7 +10,7 @@ public:
         for (int diff = 2; diff < c; diff++) {
             for (int l = 0; l < c - diff; l++) {
                 int r = l + diff;
-                cout << l << " " << r << endl;
+                // cout << l << " " << r << endl;
                 int ans = INT_MAX;
                 for (int i = l + 1; i < r; i++) {
                     ans = min(ans, cuts[r] - cuts[l] + dp[l][i] + dp[i][r]);
