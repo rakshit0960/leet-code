@@ -1,22 +1,28 @@
 class Solution:
     def canPartition(self, nums: List[int]) -> bool:
-        if sum(nums) % 2: return False
+        n = len(nums)
+        total = sum(nums)
+        if total % 2 == 1: return False
 
-        halfSum = sum(nums) // 2
+        dp = [[0] * int(total // 2 + 1) for _ in range(len(nums) + 1)]
 
-        dp = [[-1] * (halfSum + 1) for _ in range(len(nums))]
+        # base case 
+        # dp[i][0] = True;
+        # dp[n][i] = False if i != 0 else True
+        for i in range(len(nums) + 1):
+            dp[i][0] = True
 
-        def dfs(i, amt):
-            if i < 0:
-                return False
-            if i == 0:
-                return nums[0] == amt
+        for req in range(total // 2 + 1):
+            dp[n][req] = False
+        
+        dp[n][0] = True
 
-            if dp[i][amt] != -1: 
-                return dp[i][amt] 
+        # dp[i][reqSum] = dp[i + 1][reqSum] or dp[i + 1][reqSum - nums[i]];
+        for i in range(n - 1, -1, -1):
+            for req in range(total // 2 + 1):
+                if req - nums[i] >= 0:
+                    dp[i][req] = dp[i + 1][req] or dp[i + 1][req - nums[i]]
+                else:
+                    dp[i][req] = dp[i + 1][req]
 
-            dp[i][amt] = dfs(i - 1, amt) or dfs(i - 1, amt - nums[i]) 
-
-            return dp[i][amt]
-
-        return dfs(len(nums) - 1, halfSum)
+        return dp[0][total // 2]
