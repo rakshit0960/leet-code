@@ -4,8 +4,6 @@ public:
         int n = stones.size();
         const int total = accumulate(stones.begin(), stones.end(), 0ll);
         
- 
-
         int dp[n + 1][total + 1];
         memset(dp, 0, sizeof(dp));
         
