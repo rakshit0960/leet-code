@@ -20,7 +20,6 @@ public:
                     j++;
                 }
                 char ch = func(i, j - 1);
-                cout << i << " " << j - 1 << " " << ch << endl;
                 if (ch == 't') t_count++;
                 else if (ch == 'f') f_count++;
                 i = j - 1;
