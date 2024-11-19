@@ -5,7 +5,7 @@ public:
         auto isPossible = [&](int bananaCount) {
             long long timeReq = 0;
             for (int pile : piles) {
-                timeReq += (pile / bananaCount) + bool(pile % bananaCount);
+                timeReq += ceil(pile / double(bananaCount));
             }
             return timeReq <= h;
         };
