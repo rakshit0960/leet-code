@@ -1,6 +1,4 @@
 class Solution {
-    bool isdigit(char ch) { return ch >= '0' && ch <= '9'; }
-
     string dfs(string s, int l, int r) {
         string res = "";
 
