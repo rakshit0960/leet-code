@@ -13,10 +13,8 @@ public:
                 stk.pop();
                 string decoded = "";
                 while (times--) decoded += str;
-                while (!stk.empty() && !isdigit(stk.top()[0])) {
-                    decoded = stk.top() + decoded;
-                    stk.pop();
-                }
+                decoded = stk.top() + decoded;
+                stk.pop();
                 stk.push(decoded);
                 i++;
                 continue;
