@@ -1,33 +1,41 @@
 class Solution {
-    string dfs(string s, int l, int r) {
-        string res = "";
-
-        while (l <= r) {
-            if (!isdigit(s[l])) {
-                res += s[l++];
+public:
+    string decodeString(string s) {
+        const int n = s.size();
+        stack<string> stk;
+        stk.push("");
+        int i = 0;
+        while (i < n) {
+            if (s[i] == ']') {
+                string str = stk.top();
+                stk.pop();
+                int times = stoi(stk.top());
+                stk.pop();
+                string decoded = "";
+                while (times--) decoded += str;
+                while (!stk.empty() && !isdigit(stk.top()[0])) {
+                    decoded = stk.top() + decoded;
+                    stk.pop();
+                }
+                stk.push(decoded);
+                i++;
                 continue;
             }
 
-            int digit_end = l;
-            while (s[digit_end] != '[') digit_end++;
-            int times = stoi(s.substr(l, digit_end - l));
-            int section_end = digit_end;
-            int count = 1;
-            while (count) {
-                section_end++;
-                if (s[section_end] == '[') count++;
-                if (s[section_end] == ']') count--;
+            if (!isdigit(s[i])) {
+                string top = stk.top();
+                stk.pop();
+                stk.push(top + s[i]);
+                i++;
+                continue;
             }
-            string decoded_section = dfs(s, digit_end + 1, section_end - 1);
-
-            while (times--) res += decoded_section;
-            l = section_end + 1;
+            
+            int openIndex = i;
+            while(s[openIndex] != '[') openIndex++;
+            stk.push(s.substr(i, openIndex - i));
+            stk.push("");
+            i = openIndex + 1;
         }
-
-        return res;
-    }
-public:
-    string decodeString(string s) {
-        return dfs(s, 0, s.size() - 1);
+        return stk.top();
     }
 };
